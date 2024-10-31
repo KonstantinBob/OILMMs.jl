@@ -197,6 +197,6 @@ function AbstractGPs.posterior(fx::FiniteGP{<:OILMM}, y::AbstractVector{<:Real})
     # Condition each latent process on the projected observations.
     y_rows = collect(eachrow(Yproj))
     ΣT_rows = collect(eachrow(ΣT))
-    fs_posterior = map((f, s, y) -> posterior(f(x, collect(s)), collect(y)), fs, ΣT_rows, y_rows)
+    fs_posterior = map((f, s, y) -> posterior(f(x, minimum(collect(s))), collect(y)), fs, ΣT_rows, y_rows)
     return OILMM(fs_posterior, U, S, D)
 end
